@@ -5,10 +5,7 @@ import { loadEnv } from "./envs";
 
 loadEnv();
 
-// REDIS_URL não é obrigatório.
-const redis = createClient({
-  url: process.env.REDIS_URL
-});
+export const redis = createClient();
 
 redis.on("error", err => console.log("Redis Client Error", err));
 
