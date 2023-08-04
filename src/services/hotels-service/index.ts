@@ -30,7 +30,7 @@ async function getHotels(userId: number) {
 
   const hotels = await hotelRepository.findHotels();
 
-  await redisService.set({ key: cacheKeys.HOTELS, value: hotels });
+  redisService.set({ key: cacheKeys.HOTELS, value: hotels });
   return hotels;
 }
 
@@ -46,7 +46,7 @@ async function getHotelsWithRooms(userId: number, hotelId: number) {
     throw notFoundError();
   }
 
-  await redisService.set({ key: cacheKeys.HOTEL_WITH_ROOMS, value: hotel });
+  redisService.set({ key: cacheKeys.HOTEL_WITH_ROOMS, value: hotel });
   return hotel;
 }
 
