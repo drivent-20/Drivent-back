@@ -1,7 +1,7 @@
 import hotelRepository from "@/repositories/hotel-repository";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import ticketRepository from "@/repositories/ticket-repository";
-import { notFoundError } from "@/errors";
+import { conflictError, notFoundError } from "@/errors";
 import { cannotListHotelsError } from "@/errors/cannot-list-hotels-error";
 import redisService from "../redis-service";
 
@@ -17,8 +17,12 @@ async function listHotels(userId: number) {
   }
 
   const ticket = await ticketRepository.findTicketByEnrollmentId(enrollment.id);
-  if (!ticket || ticket.status === "RESERVED" || ticket.TicketType.isRemote || !ticket.TicketType.includesHotel) {
+
+  if (!ticket || ticket.status === "RESERVED") {
     throw cannotListHotelsError();
+  }
+  if (ticket.TicketType.isRemote || !ticket.TicketType.includesHotel){
+    throw conflictError("Doesn't include hotel");
   }
 }
 
