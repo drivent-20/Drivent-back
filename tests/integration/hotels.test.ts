@@ -150,6 +150,8 @@ describe("GET /hotels/:hotelId", () => {
   });
 
   describe("when token is valid", () => {
+    //Fix this one:
+
     // it("should respond with status 402 when user ticket is remote ", async () => {
     //   const user = await createUser();
     //   const token = await generateValidToken(user);
