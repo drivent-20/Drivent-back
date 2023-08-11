@@ -1,5 +1,8 @@
 import { prisma } from "@/config";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { Enrollment } from "@prisma/client";
+
+type PrismaAPI = PrismaClient | Prisma.TransactionClient;
 
 async function findWithAddressByUserId(userId: number) {
   return prisma.enrollment.findFirst({
@@ -20,8 +23,9 @@ async function upsert(
   userId: number,
   createdEnrollment: CreateEnrollmentParams,
   updatedEnrollment: UpdateEnrollmentParams,
+  tx: PrismaAPI = prisma
 ) {
-  return prisma.enrollment.upsert({
+  return tx.enrollment.upsert({
     where: {
       userId,
     },
