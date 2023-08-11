@@ -1,10 +1,13 @@
-import { prisma } from "@/config";
-import { Prisma, PrismaClient } from "@prisma/client";
-import { Address } from "@prisma/client";
+import { prisma } from '@/config';
+import { PrismaAPI } from '../../utils/prisma-utils';
+import { Address } from '@prisma/client';
 
-type PrismaAPI = PrismaClient | Prisma.TransactionClient;
-
-async function upsert(enrollmentId: number, createdAddress: CreateAddressParams, updatedAddress: UpdateAddressParams, tx: PrismaAPI = prisma) {
+async function upsert(
+  enrollmentId: number,
+  createdAddress: CreateAddressParams,
+  updatedAddress: UpdateAddressParams,
+  tx: PrismaAPI = prisma,
+) {
   return tx.address.upsert({
     where: {
       enrollmentId,
@@ -17,7 +20,7 @@ async function upsert(enrollmentId: number, createdAddress: CreateAddressParams,
   });
 }
 
-export type CreateAddressParams = Omit<Address, "id" | "createdAt" | "updatedAt" | "enrollmentId">;
+export type CreateAddressParams = Omit<Address, 'id' | 'createdAt' | 'updatedAt' | 'enrollmentId'>;
 export type UpdateAddressParams = CreateAddressParams;
 
 const addressRepository = {

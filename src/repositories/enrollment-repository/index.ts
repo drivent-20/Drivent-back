@@ -1,8 +1,6 @@
 import { prisma } from "@/config";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaAPI } from "../../utils/prisma-utils";
 import { Enrollment } from "@prisma/client";
-
-type PrismaAPI = PrismaClient | Prisma.TransactionClient;
 
 async function findWithAddressByUserId(userId: number) {
   return prisma.enrollment.findFirst({
