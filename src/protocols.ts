@@ -30,3 +30,11 @@ export type RequestError = {
   name: string,
   message: string,
 };
+
+export type AccessToken = {
+  code: string;
+  grant_type: string;
+  redirect_uri: string;
+  client_id: string;
+  client_secret: string;
+}
