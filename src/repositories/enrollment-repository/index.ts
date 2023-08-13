@@ -1,4 +1,5 @@
 import { prisma } from "@/config";
+import { PrismaAPI } from "../../utils/prisma-utils";
 import { Enrollment } from "@prisma/client";
 
 async function findWithAddressByUserId(userId: number) {
@@ -20,8 +21,9 @@ async function upsert(
   userId: number,
   createdEnrollment: CreateEnrollmentParams,
   updatedEnrollment: UpdateEnrollmentParams,
+  tx: PrismaAPI = prisma
 ) {
-  return prisma.enrollment.upsert({
+  return tx.enrollment.upsert({
     where: {
       userId,
     },
