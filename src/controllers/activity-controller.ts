@@ -11,3 +11,15 @@ export async function getActivity(req: AuthenticatedRequest, res: Response) {
     return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
+
+export async function getActivityByDate(req: AuthenticatedRequest, res: Response) {
+  const { date } = req.params;
+  console.log('controller date= '+date)
+  
+  try {
+    const activities = await activityService.findActivitiesByDate(date);
+    return res.status(httpStatus.OK).send(activities);
+  } catch (error) {
+    return res.sendStatus(httpStatus.NOT_FOUND);
+  }
+}
